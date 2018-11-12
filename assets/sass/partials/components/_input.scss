@@ -1,0 +1,41 @@
+/*
+ * INPUT
+*/
+
+input[type=text],
+input[type=url],
+input[type=email],
+input[type=tel],
+input[type=number],
+input[type=password] {
+	appearance: none;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 0;
+	border: 0;
+	font-family: $font-main;
+}
+
+textarea {
+	resize: none;
+	width: 148px;
+	appearance: none;
+	border: 0;
+	max-width: 100%;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 0;
+	font-family: $font-main;
+}
+
+select {
+	width: 168px;
+	border-radius: 0;
+	padding: 10px;
+	margin: 0;
+	border: 0;
+	font-family: $font-main;
+	font-size: 16px;
+	line-height: 1;
+	height: 34px;
+}
