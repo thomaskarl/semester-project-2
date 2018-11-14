@@ -1,0 +1,54 @@
+/*
+ * CARDS
+*/
+
+.wrapper {
+	text-align: center;
+
+	.player-heading {
+		font-family: $font-headline;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.cards {
+		@include center-flex;
+
+		.card {
+			color: white;
+			padding: $space;
+			margin: $space;
+			text-align: center;
+			width: 200px;
+			height: 300px;
+			border: 2px solid black;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: center;
+			position: relative;
+
+			p {
+				margin: 2px;
+			}
+
+			.badge1 {
+				@include badge;
+				background-color: $brand-color3;
+
+				&:after {
+					content: 'Player 1';
+				}
+			}
+
+			.badge2 {
+				@include badge;
+				background-color: $brand-color2;
+
+				&:after {
+					content: 'Player 2';
+				}
+			}
+		}
+	}
+}

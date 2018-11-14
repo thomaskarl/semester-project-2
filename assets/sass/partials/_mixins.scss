@@ -4,13 +4,43 @@
 
 // Align
 @mixin center-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
 // Shadows
 @mixin shadow {
-	box-shadow: 5px 5px 3px 0px $brand-color3;
+	box-shadow: 5px 5px 3px 0 $brand-color3;
+}
+
+@mixin badge {
+	@include center-flex;
+	font-family: $font-headline;
+	font-weight: 700;
+	width: 90%;
+	height: 50px;
+	position: absolute;
+	top: -25px;
+	border-radius: 10px;
+	opacity: .8;
+}
+
+// Font classes
+.font-headline {
+	font-family: $font-headline;
+}
+
+.font-subheadline {
+	font-family: $font-subheadline;
+}
+
+.font-main {
+	font-family: $font-main;
+}
+
+// Margin
+.margin {
+	margin: $space * 2;
 }

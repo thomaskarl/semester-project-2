@@ -10,13 +10,11 @@ a.button,
 	border-radius: 0;
 	border: 0;
 	background-color: $brand-color2;
-	margin: 0;
 	padding: 10px 30px;
 	cursor: pointer;
 	display: inline-block;
 	color: $light;
 	text-decoration: none;
-	font-family: $font-main;
 
 	&:focus,
 	&:hover {
