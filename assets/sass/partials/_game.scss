@@ -1,3 +1,51 @@
 /*
- * HEADER
+ * GAME
 */
+
+.players {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+
+	.player-container {
+		padding: $space;
+		height: 280px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		p {
+			color: $light;
+			font-size: 20px;
+		}
+	}
+
+	.vs {
+		padding: 82px $space;
+	}
+}
+
+.game-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	.dice-container {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+.gamestatus {
+	width: 300px;
+	height: 200px;
+	background-color: peru;
+}
+
+.game-container {
+
+	.gamelog {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+}

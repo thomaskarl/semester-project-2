@@ -7,7 +7,42 @@
 </head>
 <body>
 
+<div class="wrapper">
+	<h1 class="player-heading"></h1>
+	<div class="players">
+		<div class="player-container player1">
+			<p>Player 1:</p>
+			<div class="shield-player1"></div>
+			<p>Position: <span id="position1"></span></p>
+		</div>
+		<div class="vs"><h2>VS</h2></div>
+		<div class="player-container player2">
+			<p>Player 2:</p>
+			<div class="shield-player2"></div>
+			<p>Position: <span id="position2"></span></p>
+		</div>
+	</div>
+	<div class="game-container">
+		<div class="player1-dice-container dice-container">
+			<h1 id="dice1" class="dice1">Dice1</h1>
+			<a id="roll1" class="button font-headline margin">Roll</a>
+			<div id="gamelog1" class="gamelog"></div>
+		</div>
+		<canvas id="canvas">Your browser doesn't support canvas element, therefor, no game for you 😥</canvas>
+		<div class="player2-dice-container dice-container">
+			<h1 id="dice2" class="dice2">Dice2</h1>
+			<a id="roll2" class="button font-headline margin">Roll</a>
+			<div id="gamelog2" class="gamelog"></div>
+		</div>
+	</div>
+	<br>
+	<a id="autoroll" class="button font-headline margin">Autoroll the dice</a>
+	<a class="button font-headline margin" href="index.html">Back to player selection</a>
+	<a id="restart" class="button font-headline margin">Restart</a>
+	<div class="gamelog-container">
 
-<script src="assets/js/script.js"></script>
+	</div>
+</div>
+<script src="assets/js/game.js"></script>
 </body>
 </html>
