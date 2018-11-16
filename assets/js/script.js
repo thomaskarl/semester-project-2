@@ -38,8 +38,11 @@ localStorage.clear();
 
 function createCard(result) {
 
+	console.log(result);
+
 	let div1 = document.createElement('div');
 	div1.classList.add('card');
+	div1.classList.add('overlay');
 	cards.appendChild(div1);
 
 	let name = document.createElement('p');
@@ -47,21 +50,30 @@ function createCard(result) {
 	div1.appendChild(name);
 	name.innerHTML = 'Name: <b>' + result['name'] + '</b>';
 
-	if (result['name'] === 'Eddard Stark') div1.style.backgroundColor = '#343434';
-	if (result['name'] === 'Loras Tyrell') div1.style.backgroundColor = '#44892A';
-	if (result['name'] === 'Daenerys Targaryen') div1.style.backgroundColor = '#161616';
-	if (result['name'] === 'Renly Baratheon') div1.style.backgroundColor = '#EBA000';
-	if (result['name'] === 'Cersei Lannister') div1.style.backgroundColor = '#2E3248';
-	if (result['name'] === 'Jon Arryn') div1.style.backgroundColor = '#312B3C';
-	if (result['name'] === 'Maege Mormont') div1.style.backgroundColor = '#79AB61';
-	if (result['name'] === 'Quellon Greyjoy') div1.style.backgroundColor = '#6C5F45';
-	if (result['name'] === 'Gregor Clegane') div1.style.backgroundColor = '#CF9723';
-	if (result['name'] === 'Hoster Tully') div1.style.backgroundColor = '#7E828D';
+	let shield = document.createElement('img');
+	shield.classList.add('shield');
+	div1.appendChild(shield);
+	let shieldUrl = 'assets/images/shields/shield';
+
+	if (result['name'] === 'Eddard Stark') { div1.style.backgroundColor = '#343434'; shield.src = shieldUrl + '1.svg'}
+	if (result['name'] === 'Loras Tyrell') { div1.style.backgroundColor = '#44892A'; shield.src = shieldUrl + '2.svg'; }
+	if (result['name'] === 'Daenerys Targaryen') { div1.style.backgroundColor = '#161616'; shield.src = shieldUrl + '3.svg'; }
+	if (result['name'] === 'Renly Baratheon') { div1.style.backgroundColor = '#EBA000'; shield.src = shieldUrl + '4.svg'; }
+	if (result['name'] === 'Cersei Lannister') { div1.style.backgroundColor = '#2E3248'; shield.src = shieldUrl + '5.svg'; }
+	if (result['name'] === 'Jon Arryn') { div1.style.backgroundColor = '#312B3C'; shield.src = shieldUrl + '6.svg'; }
+	if (result['name'] === 'Maege Mormont') { div1.style.backgroundColor = '#79AB61'; shield.src = shieldUrl + '7.svg'; }
+	if (result['name'] === 'Quellon Greyjoy') { div1.style.backgroundColor = '#6C5F45'; shield.src = shieldUrl + '8.svg'; }
+	if (result['name'] === 'Gregor Clegane') { div1.style.backgroundColor = '#CF9723'; shield.src = shieldUrl + '9.svg'; }
+	if (result['name'] === 'Hoster Tully') { div1.style.backgroundColor = '#7E828D'; shield.src = shieldUrl + '10.svg'; }
 
 	let gender = document.createElement('p');
 	gender.classList.add('gender');
 	div1.appendChild(gender);
-	gender.innerHTML = 'Gender: <b>' + result['gender'] + '</b>';
+	if (result['gender'] === 'Female') {
+		gender.innerHTML = 'Gender: <b class="gender-sign">♀</b>';
+	} else {
+		gender.innerHTML = 'Gender: <b class="gender-sign">♂</b>';
+	}
 
 	let culture = document.createElement('p');
 	culture.classList.add('culture');
@@ -82,18 +94,20 @@ function createCard(result) {
 	div1.addEventListener('click', function () {
 		if (localStorage.player1 && localStorage.player2) {
 			localStorage.clear();
-			resetBackground();
-			removeBadge();
+			reset();
 			localStorage.player1 = result['name'];
 			div1.style.outline = '5px solid Gold';
+			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer1();
 		} else if (localStorage.player1) {
 			localStorage.player2 = result['name'];
 			div1.style.outline = '5px solid Gold';
+			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer2();
 		} else {
 			localStorage.player1 = result['name'];
 			div1.style.outline = '5px solid Gold';
+			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer1();
 		}
 	});
@@ -111,35 +125,25 @@ function createCard(result) {
 		badge.classList.add('badge2');
 		div1.appendChild(badge);
 	}
-
-
-	// function setLocalStore(key, value) {
-	// 	localStorage.setItem(key, value);
-	// }
-
-
-	console.log(name);
-	console.log(gender);
-	console.log(culture);
-	console.log(born);
-	console.log('---');
-
-
-	// img.style.width = '100%';
-	// img.src = myCard[i].imageUrl;
 }
 
-function removeBadge() {
+
+
+/**
+ * Remove & reset functions
+ */
+
+function reset() {
 	document.querySelectorAll(".badge").forEach(function (elem) {
 		elem.remove();
 	});
 	document.querySelectorAll(".badge").forEach(function (elem) {
 		elem.remove();
 	});
-}
-
-function resetBackground() {
 	document.querySelectorAll(".card").forEach(function (elem) {
 		elem.style.outline = 'none';
+	});
+	document.querySelectorAll(".shield").forEach(function (elem) {
+		elem.style.transform = 'scale(1)';
 	});
 }

@@ -15,6 +15,7 @@
 		@include center-flex;
 
 		.card {
+			cursor: pointer;
 			color: white;
 			padding: $space;
 			margin: $space;
@@ -29,7 +30,18 @@
 			position: relative;
 
 			p {
+				pointer-events: none;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
 				margin: 2px;
+			}
+
+			.gender {
+				.gender-sign {
+					font-size: 24px;
+				}
 			}
 
 			.badge1 {
@@ -51,4 +63,15 @@
 			}
 		}
 	}
+}
+
+.overlay {
+	border: 20px solid $brand-color1;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: linear-gradient(0deg, rgb(0, 0, 0) 0%, #ffffff00 50%);
+	z-index: 2;
 }

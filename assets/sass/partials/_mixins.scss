@@ -12,19 +12,21 @@
 
 // Shadows
 @mixin shadow {
-	box-shadow: 5px 5px 3px 0 $brand-color3;
+	box-shadow: 5px 5px 3px 0 black;
 }
 
 @mixin badge {
 	@include center-flex;
 	font-family: $font-headline;
 	font-weight: 700;
-	width: 90%;
+	width: 270px;
 	height: 50px;
 	position: absolute;
-	top: -25px;
-	border-radius: 10px;
-	opacity: .8;
+	top: 127px;
+	background-color: #1B4D8C;
+	transform: rotate(-10deg);
+	font-size: 30px;
+	@include shadow;
 }
 
 // Font classes
