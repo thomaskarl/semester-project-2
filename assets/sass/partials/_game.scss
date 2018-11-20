@@ -8,8 +8,7 @@
 	align-items: flex-start;
 
 	.player-container {
-		padding: $space;
-		height: 280px;
+		padding: 0 $space;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -21,7 +20,7 @@
 	}
 
 	.vs {
-		padding: 82px $space;
+		padding: 44px $space;
 	}
 }
 
@@ -29,23 +28,67 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
+	flex-wrap: wrap;
+	position: relative;
 
 	.dice-container {
 		width: 200px;
-		height: 200px;
+		position: relative;
+
+		.dice2button {
+			background-color: grey;
+		}
 	}
-}
-
-.gamestatus {
-	width: 300px;
-	height: 200px;
-	background-color: peru;
-}
-
-.game-container {
 
 	.gamelog {
 		display: flex;
 		flex-direction: column-reverse;
+		position: absolute;
+		text-align: center;
+		width: 100%;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	.game-wrapper {
+		position: relative;
+
+		.start-banner {
+			@include banner;
+			top: -15px;
+			left: -50px;
+		}
+
+		.finish-banner {
+			@include banner;
+			bottom: 7px;
+			right: -20px;
+		}
+
+		.game-area {
+			background-image: url("../images/game_background.png");
+			width: 700px;
+			height: 500px;
+			position: relative;
+
+			.gameshield {
+				position: absolute;
+				top: 25px;
+				left: 25px;
+				width: 50px;
+				transform: rotate(10deg);
+				transition: all .5s ease-in-out;
+			}
+
+			.gameshield1 {
+
+			}
+
+			.gameshield2 {
+
+			}
+		}
 	}
 }

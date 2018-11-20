@@ -13,32 +13,37 @@
 		<div class="player-container player1">
 			<p>Player 1:</p>
 			<div class="shield-player1"></div>
-			<p>Position: <span id="position1"></span></p>
 		</div>
 		<div class="vs"><h2>VS</h2></div>
 		<div class="player-container player2">
 			<p>Player 2:</p>
 			<div class="shield-player2"></div>
-			<p>Position: <span id="position2"></span></p>
 		</div>
 	</div>
 	<div class="game-container">
 		<div class="player1-dice-container dice-container">
 			<h1 id="dice1" class="dice1">Dice1</h1>
-			<a id="roll1" class="button font-headline margin">Roll</a>
+			<a id="roll1" class="button font-headline margin dice1button">Roll (S)</a>
+			<p><u>Position: <span id="position1"></span></u></p>
 			<div id="gamelog1" class="gamelog"></div>
 		</div>
-		<canvas id="canvas">Your browser doesn't support canvas element, therefor, no game for you 😥</canvas>
+		<div class="game-wrapper">
+			<div class="start-banner banner">Start</div>
+			<div id="game-area" class="game-area"></div>
+			<div class="finish-banner banner">Finish 🎉</div>
+		</div>
+
+		<!--<canvas class="canvas-design" id="canvas">Your browser doesn't support canvas element, therefor, no game for you 😥</canvas>-->
 		<div class="player2-dice-container dice-container">
 			<h1 id="dice2" class="dice2">Dice2</h1>
-			<a id="roll2" class="button font-headline margin">Roll</a>
+			<a id="roll2" class="button font-headline margin dice2button">Roll (K)</a>
+			<p><u>Position: <span id="position2"></span></u></p>
 			<div id="gamelog2" class="gamelog"></div>
 		</div>
 	</div>
 	<br>
 	<a id="autoroll" class="button font-headline margin">Autoroll the dice</a>
 	<a class="button font-headline margin" href="index.html">Back to player selection</a>
-	<a id="restart" class="button font-headline margin">Restart</a>
 	<div class="gamelog-container">
 
 	</div>
