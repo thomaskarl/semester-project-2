@@ -67,13 +67,15 @@ const obstacle3 = 15;
 const obstacle4 = 20;
 const obstacle5 = 25;
 
-const startGame = 0;
-const endGame = 30;
+let currentXpositionPlayer1 = 0;
+let currentYpositionPlayer1 = 115;
+let currentXpositionPlayer2 = 0;
+let currentYpositionPlayer2 = 115;
 
 
 
 /**
- * Setting up the game area
+ * Setting up the game area 🎮
  */
 
 const gameArea = document.querySelector('#game-area');
@@ -91,41 +93,11 @@ gameshield2.src = player2shield.src;
 gameArea.appendChild(gameshield1);
 gameArea.appendChild(gameshield2);
 
-const tile = 100;
+const diceUrl = 'assets/images/dice/';
 
-const tile01 = tile;
-const tile02 = tile * 2;
-const tile03 = tile * 3;
-const tile04 = tile * 4;
-const tile05 = tile * 5;
-const tile06 = tile * 6;
-const tile07 = tile * 6;
-const tile08 = tile * 5;
-const tile09 = tile * 4;
-const tile10 = tile * 3;
-const tile11 = tile * 2;
-const tile12 = tile;
-const tile13 = tile - tile;
-const tile14 = tile - tile;
-const tile15 = tile;
-const tile16 = tile * 2;
-const tile17 = tile * 3;
-const tile18 = tile * 4;
-const tile19 = tile * 5;
-const tile20 = tile * 6;
-const tile21 = tile * 6;
-const tile22 = tile * 5;
-const tile23 = tile * 4;
-const tile24 = tile * 3;
-const tile25 = tile * 2;
-const tile26 = tile;
-const tile27 = tile - tile;
-const tile28 = tile - tile;
-const tile29 = tile;
-const tile30 = tile * 2;
-
-let currentXposition = 100;
-let currentYposition = 100;
+const moveSound = new Audio('assets/sounds/move.mp3');
+const obstacleSound = new Audio('assets/sounds/obstacle.mp3');
+const winSound = new Audio('assets/sounds/win.mp3');
 
 
 
@@ -133,12 +105,10 @@ let currentYposition = 100;
  * Roll the dices 🎲
  */
 
-let player1are = document.querySelector('#position1');
-let player2are = document.querySelector('#position2');
+const player1are = document.querySelector('#position1');
+const player2are = document.querySelector('#position2');
 
-// Dice for Player 1
-const button1 = document.querySelector('#roll1');
-
+// Roll with keyboard
 document.onkeydown = function (e) {
 	switch (e.key) {
 		case 's':
@@ -149,304 +119,412 @@ document.onkeydown = function (e) {
 	}
 };
 
+// Dice for Player 1
+const button1 = document.querySelector('#roll1');
+button1.style.backgroundColor = '#1B4D8C';
+
+const dice1 = document.querySelector('#dice1');
+const diceSvg1 = document.createElement('img');
+diceSvg1.classList.add('dice');
+dice1.appendChild(diceSvg1);
+
 button1.addEventListener('click', rollPlayer1);
 
 function rollPlayer1() {
 	if (whosTurn === 1) {
 
-		let dice1 = document.querySelector('#dice1');
 		let gameLog1 = document.querySelector('#gamelog1');
 		let diceout1 = Math.floor(Math.random() * 6) + 1;
-		dice1.innerText = diceout1;
+
+		switch (diceout1) {
+			case 1:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '1.svg'; }, 400);
+				break;
+			case 2:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 400);
+				break;
+			case 3:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 400);
+				break;
+			case 4:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '1.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 400);
+				break;
+			case 5:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '5.svg'; }, 400);
+				break;
+			case 6:
+				setTimeout(function () { diceSvg1.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg1.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg1.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg1.src = diceUrl + '6.svg'; }, 400);
+		}
+
 		let info1 = document.createElement('p');
 		gameLog1.appendChild(info1);
 		info1.innerHTML = 'Rolled ' + diceout1;
 
-		if (diceout1 === 6) {
-			info1.innerHTML = 'Rolled 6: one free roll';
-			whosTurn = 1;
-			button2.style.backgroundColor = 'gray';
-			button1.style.backgroundColor = '#1B4D8C';
-		} else {
-			whosTurn = 2;
-			button1.style.backgroundColor = 'gray';
-			button2.style.backgroundColor = '#1B4D8C';
+		function resolveAfter3Seconds() {
+			return new Promise(resolve => {
+				setTimeout(() => {
+					resolve('stop');
+					checkObstacle();
+
+				}, 3000);
+			});
 		}
-		player1score = diceout1 + player1score;
-		player1are.innerHTML = player1score;
+
+		async function asyncCall() {
+			console.log('move');
+			for (let i = 0; i < diceout1; i++) {
+				(function (ms) {
+					setTimeout(function () {
+						moveShield();
+						moveSound.play();
+					}, i * 500);
+				})(i);
+			}
+			let result = await resolveAfter3Seconds();
+			console.log(result);
+		}
+		asyncCall();
+
+		function moveShield() {
+			player1score++;
+			player1are.innerHTML = player1score;
+
+			if (player1score >= 1 && player1score <= 6) stepRight(); //➡️
+			if (player1score === 7) stepDown(); //⬇️
+			if (player1score >= 7 && player1score <= 13) stepLeft(); //⬅️
+			if (player1score === 14) stepDown(); //⬇️
+			if (player1score >= 14 && player1score <= 20) stepRight(); //➡️
+			if (player1score === 21) stepDown(); //⬇️
+			if (player1score >= 21 && player1score <= 27) stepLeft(); //⬅️
+			if (player1score === 28) stepDown(); //⬇️
+			if (player1score >= 28 && player1score <= 30) stepRight(); //⬅️
+
+			checkWinner();
+			checkWhosTurn();
+		}
+
+		function stepDown() {
+			gameshield1.style.top = currentYpositionPlayer1 + 'px';
+			currentYpositionPlayer1 += 100;
+		}
+
+		function stepLeft() {
+			console.log(currentXpositionPlayer1);
+			gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px) rotate(-10deg)';
+			currentXpositionPlayer1 -= 100;
+		}
+
+		function stepRight() {
+			currentXpositionPlayer1 += 100;
+			gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px) rotate(10deg)';
+			console.log(currentXpositionPlayer1);
+		}
+
+		function checkWhosTurn() {
+			if (diceout1 === 6) {
+				info1.innerHTML = '⭐ Rolled 6: one free roll';
+				whosTurn = 1;
+				button2.style.backgroundColor = 'gray';
+				button1.style.backgroundColor = '#1B4D8C';
+			} else {
+				whosTurn = 2;
+				button1.style.backgroundColor = 'gray';
+				button2.style.backgroundColor = '#1B4D8C';
+			}
+
+		}
 
 
 		function checkObstacle() {
 			if (player1score === obstacle1) {
-				player1score = player1score - 3;
-				info1.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 3 tiles');
+				obstacleSound.play();
+				player1score = player1score - 2;
+				info1.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 2 tiles');
+				player1are.innerHTML = player1score;
+				setTimeout(function(){
+					currentXpositionPlayer1 = 300;
+					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
+					}, 500);
 			}
 			if (player1score === obstacle2) {
-				player1score = player1score - 4;
-				info1.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 4 tiles');
+				obstacleSound.play();
+				player1score = player1score - 3;
+				info1.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 3 tiles');
+				player1are.innerHTML = player1score;
+				setTimeout(function(){
+					currentXpositionPlayer1 = 600;
+					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
+				}, 500);
 			}
 			if (player1score === obstacle3) {
-				player1score = player1score - 6;
-				info1.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 6 tiles');
+				obstacleSound.play();
+				player1score = player1score - 1;
+				info1.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 1 tiles');
+				player1are.innerHTML = player1score;
+				setTimeout(function(){
+					currentXpositionPlayer1 = 0;
+					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
+				}, 500);
 			}
 			if (player1score === obstacle4) {
-				player1score = player1score - 6;
-				info1.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 6 tiles');
+				obstacleSound.play();
+				player1score = player1score - 4;
+				info1.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 4 tiles');
+				setTimeout(function(){
+					currentXpositionPlayer1 = 200;
+					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
+				}, 500);
 			}
 			if (player1score === obstacle5) {
-				player1score = player1score - 7;
-				info1.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 7 tiles');
+				obstacleSound.play();
+				player1score = player1score - 3;
+				info1.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 3 tiles');
+				setTimeout(function(){
+					currentXpositionPlayer1 = 500;
+					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
+				}, 500);
 			}
 		}
 
-
-
-
-
-
-
-		// switch (diceout1) {
-		// 	case 1:
-		// 		for (var i = 0; i < diceout1; i++) {
-		//
-		// 			setInterval(function () {
-		// 				gameshield1.style.transform = 'translateX(' + currentPosition + '00px)';
-		// 			}, 1000);
-		// 				currentPosition++;
-		// 			clearInterval();
-		// 		}
-		// 		break;
-
-
-
-
-		switch (diceout1) {
-			case 1:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
-			case 2:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
-			case 3:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
-			case 4:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
-			case 5:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
-			case 6:
-				for (var i = 0; i < diceout1; i++) {
-					gameshield1.style.transform = 'translateX(' + currentXposition + 'px)';
-					currentXposition += 100;
-					if (currentXposition >= 700) {
-						gameshield1.style.transform ='translateX(' + currentXposition + 'px) translateY(' + currentYposition + 'px)';
-					}
-					checkObstacle();
-				}
-				break;
+		function checkWinner() {
+			if (player1score === 30) {
+				localStorage.winner = player1;
+				winSound.play();
+				console.log('Player 1 is the winner');
+			}
 		}
-
-
-		if (player1score >= 30) {
-			alert('Player 1 is the winner');
-		}
-
-
-		// if (player1score === 1) { gameshield1.style.transform = 'translateX(' + tile01 + 'px)'; }
-		// if (player1score === 2) { gameshield1.style.transform = 'translateX(' + tile02 + 'px)'; }
-		// if (player1score === 3) { gameshield1.style.transform = 'translateX(' + tile03 + 'px)'; }
-		// if (player1score === 4) { gameshield1.style.transform = 'translateX(' + tile04 + 'px)'; }
-		// if (player1score === 5) { gameshield1.style.transform = 'translateX(' + tile05 + 'px)'; }
-		// if (player1score === 6) { gameshield1.style.transform = 'translateX(' + tile06 + 'px)'; }
-		// if (player1score === 7) { gameshield1.style.transform = 'translateX(' + tile07 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 8) { gameshield1.style.transform = 'translateX(' + tile08 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 9) { gameshield1.style.transform = 'translateX(' + tile09 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 10) { gameshield1.style.transform = 'translateX(' + tile10 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 11) { gameshield1.style.transform = 'translateX(' + tile11 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 12) { gameshield1.style.transform = 'translateX(' + tile12 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 13) { gameshield1.style.transform = 'translateX(' + tile13 + 'px) translateY(' + tile + 'px)'; }
-		// if (player1score === 14) { gameshield1.style.transform = 'translateX(' + tile14 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 15) { gameshield1.style.transform = 'translateX(' + tile15 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 16) { gameshield1.style.transform = 'translateX(' + tile16 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 17) { gameshield1.style.transform = 'translateX(' + tile17 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 18) { gameshield1.style.transform = 'translateX(' + tile18 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 19) { gameshield1.style.transform = 'translateX(' + tile19 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 20) { gameshield1.style.transform = 'translateX(' + tile20 + 'px) translateY(' + tile * 2 + 'px)'; }
-		// if (player1score === 21) { gameshield1.style.transform = 'translateX(' + tile21 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 22) { gameshield1.style.transform = 'translateX(' + tile22 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 23) { gameshield1.style.transform = 'translateX(' + tile23 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 24) { gameshield1.style.transform = 'translateX(' + tile24 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 25) { gameshield1.style.transform = 'translateX(' + tile25 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 26) { gameshield1.style.transform = 'translateX(' + tile26 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 27) { gameshield1.style.transform = 'translateX(' + tile27 + 'px) translateY(' + tile * 3 + 'px)'; }
-		// if (player1score === 28) { gameshield1.style.transform = 'translateX(' + tile28 + 'px) translateY(' + tile * 4 + 'px)'; }
-		// if (player1score === 29) { gameshield1.style.transform = 'translateX(' + tile29 + 'px) translateY(' + tile * 4 + 'px)'; }
-		// if (player1score === 30) { gameshield1.style.transform = 'translateX(' + tile30 + 'px) translateY(' + tile * 4 + 'px)'; }
-		//
-
-
 	}
 }
-
-
-function stepDown(ps) {
-	ps.style.transform = 'translateY(100px)';
-}
-function stepUp(ps) {
-	ps.style.transform = 'translateY(-100px)';
-}
-function stepLeft(ps) {
-	ps.style.transform = 'translateX(-100px)';
-}
-function stepRight(ps) {
-	ps.style.transform = 'translateX(100px)';
-}
-
 
 
 // Dice for Player 2
 const button2 = document.querySelector('#roll2');
+
 button2.addEventListener('click', rollPlayer2);
+button2.style.backgroundColor = 'gray';
+
+const dice2 = document.querySelector('#dice2');
+const diceSvg2 = document.createElement('img');
+diceSvg2.classList.add('dice');
+dice2.appendChild(diceSvg2);
 
 function rollPlayer2() {
 	if (whosTurn === 2) {
-		let dice2 = document.querySelector('#dice2');
+
 		let gameLog2 = document.querySelector('#gamelog2');
 		let diceout2 = Math.floor(Math.random() * 6) + 1;
-		dice2.innerText = diceout2;
+
+		switch (diceout2) {
+			case 1:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '1.svg'; }, 400);
+				break;
+			case 2:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 400);
+				break;
+			case 3:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 400);
+				break;
+			case 4:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '1.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 400);
+				break;
+			case 5:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '5.svg'; }, 400);
+				break;
+			case 6:
+				setTimeout(function () { diceSvg2.src = diceUrl + '2.svg'; }, 100);
+				setTimeout(function () { diceSvg2.src = diceUrl + '3.svg'; }, 200);
+				setTimeout(function () { diceSvg2.src = diceUrl + '4.svg'; }, 300);
+				setTimeout(function () { diceSvg2.src = diceUrl + '6.svg'; }, 400);
+		}
+
 		let info2 = document.createElement('p');
 		gameLog2.appendChild(info2);
 		info2.innerHTML = 'Rolled ' + diceout2;
 
-		if (diceout2 === 6) {
-			info2.innerHTML = 'Rolled 6: one free roll';
-			whosTurn = 2;
-			button1.style.backgroundColor = 'gray';
-			button2.style.backgroundColor = '#1B4D8C';
-		} else {
-			whosTurn = 1;
-			button2.style.backgroundColor = 'gray';
-			button1.style.backgroundColor = '#1B4D8C';
-		}
-		player2score = diceout2 + player2score;
-		player2are.innerHTML = player2score;
+		function resolveAfter3Seconds() {
+			return new Promise(resolve => {
+				setTimeout(() => {
+					resolve('stop');
+					checkObstacle();
 
-		if (player2score === obstacle1) {
-			player2score = player2score - 3;
-			info2.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 3 tiles');
-		}
-		if (player2score === obstacle2) {
-			player2score = player2score - 4;
-			info2.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 4 tiles');
-		}
-		if (player2score === obstacle3) {
-			player2score = player2score - 6;
-			info2.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 6 tiles');
-		}
-		if (player2score === obstacle4) {
-			player2score = player2score - 6;
-			info2.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 6 tiles');
-		}
-		if (player2score === obstacle5) {
-			player2score = player2score - 7;
-			info2.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 7 tiles');
+				}, 3200);
+			});
 		}
 
-		if (player2score >= 30) {
-			alert('Player 2 is the winner');
+		async function asyncCall() {
+			console.log('move');
+			for (var i = 0; i < diceout2; i++) {
+				(function (ms) {
+					setTimeout(function () {
+						moveShield();
+						moveSound.play();
+					}, i * 500);
+				})(i);
+			}
+			var result = await resolveAfter3Seconds();
+			console.log(result);
+		}
+		asyncCall();
+
+		function moveShield() {
+			player2score++;
+			player2are.innerHTML = player2score;
+
+			if (player2score >= 1 && player2score <= 6) stepRight(); //➡️
+			if (player2score === 7) stepDown(); //⬇️
+			if (player2score >= 7 && player2score <= 13) stepLeft(); //⬅️
+			if (player2score === 14) stepDown(); //⬇️
+			if (player2score >= 14 && player2score <= 20) stepRight(); //➡️
+			if (player2score === 21) stepDown(); //⬇️
+			if (player2score >= 21 && player2score <= 27) stepLeft(); //⬅️
+			if (player2score === 28) stepDown(); //⬇️
+			if (player2score >= 28 && player2score <= 30) stepRight(); //⬅️
+
+			checkWinner();
+			checkWhosTurn();
+		}
+
+		function stepDown() {
+			gameshield2.style.top = currentYpositionPlayer2 + 'px';
+			currentYpositionPlayer2 += 100;
+		}
+
+		function stepLeft() {
+			console.log(currentXpositionPlayer2);
+			gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px) rotate(-10deg)';
+			currentXpositionPlayer2 -= 100;
+		}
+
+		function stepRight() {
+			currentXpositionPlayer2 += 100;
+			gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px) rotate(10deg)';
+			console.log(currentXpositionPlayer2);
+		}
+
+		function checkWhosTurn() {
+			if (diceout2 === 6) {
+				info2.innerHTML = '⭐ Rolled 6: one free roll';
+				whosTurn = 2;
+				button1.style.backgroundColor = 'gray';
+				button2.style.backgroundColor = '#1B4D8C';
+			} else {
+				whosTurn = 1;
+				button2.style.backgroundColor = 'gray';
+				button1.style.backgroundColor = '#1B4D8C';
+			}
+
 		}
 
 
+		function checkObstacle() {
+			if (player2score === obstacle1) {
+				obstacleSound.play();
+				player2score = player2score - 2;
+				info2.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 2 tiles');
+				player2are.innerHTML = player2score;
+				setTimeout(function(){
+					currentXpositionPlayer2 = 300;
+					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
+				}, 500);
+			}
+			if (player2score === obstacle2) {
+				obstacleSound.play();
+				player2score = player2score - 3;
+				info2.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 3 tiles');
+				player2are.innerHTML = player2score;
+				setTimeout(function(){
+					currentXpositionPlayer2 = 600;
+					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
+				}, 500);
+			}
+			if (player2score === obstacle3) {
+				obstacleSound.play();
+				player2score = player2score - 1;
+				info2.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 1 tiles');
+				player2are.innerHTML = player2score;
+				setTimeout(function(){
+					currentXpositionPlayer2 = 0;
+					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
+				}, 500);
+			}
+			if (player2score === obstacle4) {
+				obstacleSound.play();
+				player2score = player2score - 4;
+				info2.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 4 tiles');
+				setTimeout(function(){
+					currentXpositionPlayer2 = 200;
+					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
+				}, 500);
+			}
+			if (player2score === obstacle5) {
+				obstacleSound.play();
+				player2score = player2score - 3;
+				info2.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 3 tiles');
+				setTimeout(function(){
+					currentXpositionPlayer2 = 500;
+					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
+				}, 500);
+			}
+		}
 
-
-		if (player2score === 1) { gameshield2.style.transform = 'translateX(' + tile01 + 'px)'; }
-		if (player2score === 2) { gameshield2.style.transform = 'translateX(' + tile02 + 'px)'; }
-		if (player2score === 3) { gameshield2.style.transform = 'translateX(' + tile03 + 'px)'; }
-		if (player2score === 4) { gameshield2.style.transform = 'translateX(' + tile04 + 'px)'; }
-		if (player2score === 5) { gameshield2.style.transform = 'translateX(' + tile05 + 'px)'; }
-		if (player2score === 6) { gameshield2.style.transform = 'translateX(' + tile06 + 'px)'; }
-		if (player2score === 7) { gameshield2.style.transform = 'translateX(' + tile07 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 8) { gameshield2.style.transform = 'translateX(' + tile08 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 9) { gameshield2.style.transform = 'translateX(' + tile09 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 10) { gameshield2.style.transform = 'translateX(' + tile10 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 11) { gameshield2.style.transform = 'translateX(' + tile11 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 12) { gameshield2.style.transform = 'translateX(' + tile12 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 13) { gameshield2.style.transform = 'translateX(' + tile13 + 'px) translateY(' + tile + 'px)'; }
-		if (player2score === 14) { gameshield2.style.transform = 'translateX(' + tile14 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 15) { gameshield2.style.transform = 'translateX(' + tile15 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 16) { gameshield2.style.transform = 'translateX(' + tile16 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 17) { gameshield2.style.transform = 'translateX(' + tile17 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 18) { gameshield2.style.transform = 'translateX(' + tile18 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 19) { gameshield2.style.transform = 'translateX(' + tile19 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 20) { gameshield2.style.transform = 'translateX(' + tile20 + 'px) translateY(' + tile * 2 + 'px)'; }
-		if (player2score === 21) { gameshield2.style.transform = 'translateX(' + tile21 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 22) { gameshield2.style.transform = 'translateX(' + tile22 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 23) { gameshield2.style.transform = 'translateX(' + tile23 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 24) { gameshield2.style.transform = 'translateX(' + tile24 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 25) { gameshield2.style.transform = 'translateX(' + tile25 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 26) { gameshield2.style.transform = 'translateX(' + tile26 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 27) { gameshield2.style.transform = 'translateX(' + tile27 + 'px) translateY(' + tile * 3 + 'px)'; }
-		if (player2score === 28) { gameshield2.style.transform = 'translateX(' + tile28 + 'px) translateY(' + tile * 4 + 'px)'; }
-		if (player2score === 29) { gameshield2.style.transform = 'translateX(' + tile29 + 'px) translateY(' + tile * 4 + 'px)'; }
-		if (player2score === 30) { gameshield2.style.transform = 'translateX(' + tile30 + 'px) translateY(' + tile * 4 + 'px)'; }
-
-
-
-
-
+		function checkWinner() {
+			if (player2score === 30) {
+				localStorage.winner = player1;
+				winSound.play();
+				console.log('Player 2 is the winner');
+			}
+		}
 	}
-
-
 }
 
 
 
+
+
+
+
 /**
- * Autoroll button
+ * Autoroll button 🗞️
  */
 
-let speedOfautoroll = 1000;
+let speedOfautoroll = 5000;
 
 let autoRoll = document.querySelector('#autoroll');
 autoRoll.addEventListener('click', function () {
-	var positionInterval = setInterval(function () {
+	let positionInterval = setInterval(function () {
 		if (player1score < 30 && player2score < 30) {
 			if (whosTurn === 1) {
 				document.getElementById("roll1").click();
@@ -463,69 +541,3 @@ autoRoll.addEventListener('click', function () {
 
 
 
-
-
-// /**
-//  * Setting up the canvas
-//  */
-//
-// const canvas = document.getElementById("canvas");
-// canvas.style.border = '10px solid black';
-// canvas.style.width = '600px';
-// const ctx = canvas.getContext("2d");
-//
-//
-//
-// const speedOfCanvas = 10;
-//
-// // let start = -165;
-// setInterval(function () {
-//
-// 	ctx.fillStyle = "white";
-// 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-//
-// 	if (player1score === 1) {  ctx.fillRect(10,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 2) {  ctx.fillRect(20,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 3) {  ctx.fillRect(30,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 4) {  ctx.fillRect(40,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 5) {  ctx.fillRect(50,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 6) {  ctx.fillRect(60,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 7) {  ctx.fillRect(70,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 8) {  ctx.fillRect(80,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 9) {  ctx.fillRect(90,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 10) {  ctx.fillRect(100,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 11) {  ctx.fillRect(110,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 12) {  ctx.fillRect(120,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 13) {  ctx.fillRect(130,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 14) {  ctx.fillRect(140,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 15) {  ctx.fillRect(150,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 16) {  ctx.fillRect(160,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 17) {  ctx.fillRect(170,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 18) {  ctx.fillRect(180,60,10,10); ctx.fillStyle="#FF0000";}
-// 	if (player1score === 19) {  ctx.fillRect(190,60,10,10); ctx.fillStyle="#FF0000";}
-//
-//
-// 	if (player2score === 1) {  ctx.fillRect(10,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 2) {  ctx.fillRect(20,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 3) {  ctx.fillRect(30,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 4) {  ctx.fillRect(40,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 5) {  ctx.fillRect(50,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 6) {  ctx.fillRect(60,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 7) {  ctx.fillRect(70,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 8) {  ctx.fillRect(80,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 9) {  ctx.fillRect(90,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 10) {  ctx.fillRect(100,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 11) {  ctx.fillRect(110,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 12) {  ctx.fillRect(120,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 13) {  ctx.fillRect(130,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 14) {  ctx.fillRect(140,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 15) {  ctx.fillRect(150,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 16) {  ctx.fillRect(160,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 17) {  ctx.fillRect(170,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 18) {  ctx.fillRect(180,60,10,10); ctx.fillStyle="#FFFF00";}
-// 	if (player2score === 19) {  ctx.fillRect(190,60,10,10); ctx.fillStyle="#FFFF00";}
-//
-//
-//
-//
-// }, speedOfCanvas);
