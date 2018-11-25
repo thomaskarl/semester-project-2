@@ -18,7 +18,6 @@ const characters = [339, 640, 1303, 862, 238, 572, 692, 836, 1442, 503];
 
 for (let i = 0; i < characters.length; i++) {
 	let url = api + characters[i];
-	console.log(url);
 
 	fetch(url)
 		.then(result => result.json())
@@ -37,8 +36,6 @@ const cards = document.getElementById('cards');
 localStorage.clear();
 
 function createCard(result) {
-
-	console.log(result);
 
 	let div1 = document.createElement('div');
 	div1.classList.add('card');
