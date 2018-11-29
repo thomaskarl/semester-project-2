@@ -93,17 +93,17 @@ function createCard(result) {
 			localStorage.clear();
 			reset();
 			localStorage.player1 = result['name'];
-			div1.style.outline = '5px solid Gold';
+			div1.style.outline = '5px solid white';
 			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer1();
 		} else if (localStorage.player1) {
 			localStorage.player2 = result['name'];
-			div1.style.outline = '5px solid Gold';
+			div1.style.outline = '5px solid white';
 			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer2();
 		} else {
 			localStorage.player1 = result['name'];
-			div1.style.outline = '5px solid Gold';
+			div1.style.outline = '5px solid white';
 			shield.style.transform = 'scale(1.1)';
 			createBadgePlayer1();
 		}
@@ -144,3 +144,23 @@ function reset() {
 		elem.style.transform = 'scale(1)';
 	});
 }
+
+
+
+/**
+ * Start Game button
+ */
+
+const startGame = document.querySelector('.start-game-button');
+
+startGame.addEventListener('click', function () {
+	if (localStorage.player1 && localStorage.player2) {
+		startGame.href = 'game.html';
+		startGame.click();
+	} else {
+		alert('💡 Cant play without 2 players...');
+		startGame.href = '#';
+	}
+}, false);
+
+
