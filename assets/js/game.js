@@ -72,6 +72,8 @@ let currentYpositionPlayer1 = 115;
 let currentXpositionPlayer2 = 0;
 let currentYpositionPlayer2 = 115;
 
+let rollSumPlayer1 = 0;
+let rollSumPlayer2 = 0;
 
 
 /**
@@ -132,6 +134,7 @@ button1.addEventListener('click', rollPlayer1);
 
 function rollPlayer1() {
 	if (whosTurn === 1) {
+		rollSumPlayer1++;
 
 		let gameLog1 = document.querySelector('#gamelog1');
 		let diceout1 = Math.floor(Math.random() * 6) + 1;
@@ -184,7 +187,7 @@ function rollPlayer1() {
 					resolve('stop');
 					checkObstacle();
 
-				}, 3000);
+				}, 3200);
 			});
 		}
 
@@ -244,10 +247,12 @@ function rollPlayer1() {
 				whosTurn = 1;
 				button2.style.backgroundColor = 'gray';
 				button1.style.backgroundColor = '#1B4D8C';
+				button1.disabled = "enable";
 			} else {
 				whosTurn = 2;
 				button1.style.backgroundColor = 'gray';
 				button2.style.backgroundColor = '#1B4D8C';
+				button1.disabled = "disabled";
 			}
 
 		}
@@ -259,8 +264,8 @@ function rollPlayer1() {
 				player1score = player1score - 2;
 				info1.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 2 tiles');
 				player1are.innerHTML = player1score;
+				currentXpositionPlayer1 = 300;
 				setTimeout(function(){
-					currentXpositionPlayer1 = 300;
 					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
 					}, 500);
 			}
@@ -269,8 +274,8 @@ function rollPlayer1() {
 				player1score = player1score - 3;
 				info1.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 3 tiles');
 				player1are.innerHTML = player1score;
+				currentXpositionPlayer1 = 600;
 				setTimeout(function(){
-					currentXpositionPlayer1 = 600;
 					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
 				}, 500);
 			}
@@ -279,8 +284,8 @@ function rollPlayer1() {
 				player1score = player1score - 1;
 				info1.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 1 tiles');
 				player1are.innerHTML = player1score;
+				currentXpositionPlayer1 = 0;
 				setTimeout(function(){
-					currentXpositionPlayer1 = 0;
 					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
 				}, 500);
 			}
@@ -288,8 +293,9 @@ function rollPlayer1() {
 				obstacleSound.play();
 				player1score = player1score - 4;
 				info1.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 4 tiles');
+				player1are.innerHTML = player1score;
+				currentXpositionPlayer1 = 200;
 				setTimeout(function(){
-					currentXpositionPlayer1 = 200;
 					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
 				}, 500);
 			}
@@ -297,8 +303,9 @@ function rollPlayer1() {
 				obstacleSound.play();
 				player1score = player1score - 3;
 				info1.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 3 tiles');
+				player1are.innerHTML = player1score;
+				currentXpositionPlayer1 = 500;
 				setTimeout(function(){
-					currentXpositionPlayer1 = 500;
 					gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
 				}, 500);
 			}
@@ -307,8 +314,12 @@ function rollPlayer1() {
 		function checkWinner() {
 			if (player1score === 30) {
 				localStorage.winner = player1;
+				localStorage.rolls = rollSumPlayer1;
 				winSound.play();
 				console.log('Player 1 is the winner');
+				setTimeout(function(){
+					document.getElementById("winner-button").click();
+				}, 2000);
 			}
 		}
 	}
@@ -328,6 +339,7 @@ dice2.appendChild(diceSvg2);
 
 function rollPlayer2() {
 	if (whosTurn === 2) {
+		rollSumPlayer2++;
 
 		let gameLog2 = document.querySelector('#gamelog2');
 		let diceout2 = Math.floor(Math.random() * 6) + 1;
@@ -440,10 +452,12 @@ function rollPlayer2() {
 				whosTurn = 2;
 				button1.style.backgroundColor = 'gray';
 				button2.style.backgroundColor = '#1B4D8C';
+				button2.disabled = "enable";
 			} else {
 				whosTurn = 1;
 				button2.style.backgroundColor = 'gray';
 				button1.style.backgroundColor = '#1B4D8C';
+				button2.disabled = "disabled";
 			}
 
 		}
@@ -452,48 +466,50 @@ function rollPlayer2() {
 		function checkObstacle() {
 			if (player2score === obstacle1) {
 				obstacleSound.play();
-				player2score = player2score - 2;
 				info2.innerHTML = ('Hit tile: ' + obstacle1 + ', go back 2 tiles');
 				player2are.innerHTML = player2score;
 				setTimeout(function(){
+					player2score = player2score - 2;
 					currentXpositionPlayer2 = 300;
 					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
 				}, 500);
 			}
 			if (player2score === obstacle2) {
 				obstacleSound.play();
-				player2score = player2score - 3;
 				info2.innerHTML = ('Hit tile: ' + obstacle2 + ', go back 3 tiles');
 				player2are.innerHTML = player2score;
 				setTimeout(function(){
+					player2score = player2score - 3;
 					currentXpositionPlayer2 = 600;
 					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
 				}, 500);
 			}
 			if (player2score === obstacle3) {
 				obstacleSound.play();
-				player2score = player2score - 1;
 				info2.innerHTML = ('Hit tile: ' + obstacle3 + ', go back 1 tiles');
 				player2are.innerHTML = player2score;
 				setTimeout(function(){
+					player2score = player2score - 1;
 					currentXpositionPlayer2 = 0;
 					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
 				}, 500);
 			}
 			if (player2score === obstacle4) {
 				obstacleSound.play();
-				player2score = player2score - 4;
 				info2.innerHTML = ('Hit tile: ' + obstacle4 + ', go back 4 tiles');
+				player2are.innerHTML = player2score;
 				setTimeout(function(){
+					player2score = player2score - 4;
 					currentXpositionPlayer2 = 200;
 					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
 				}, 500);
 			}
 			if (player2score === obstacle5) {
 				obstacleSound.play();
-				player2score = player2score - 3;
 				info2.innerHTML = ('Hit tile: ' + obstacle5 + ', go back 3 tiles');
+				player2are.innerHTML = player2score;
 				setTimeout(function(){
+					player2score = player2score - 3;
 					currentXpositionPlayer2 = 500;
 					gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
 				}, 500);
@@ -502,15 +518,29 @@ function rollPlayer2() {
 
 		function checkWinner() {
 			if (player2score === 30) {
-				localStorage.winner = player1;
+				localStorage.winner = player2;
+				localStorage.rolls = rollSumPlayer2;
 				winSound.play();
 				console.log('Player 2 is the winner');
+				setTimeout(function(){
+					document.getElementById("winner-button").click();
+				}, 2000);
 			}
 		}
 	}
 }
 
 
+
+/**
+ * Silent Winner 'button'
+ */
+const body = document.querySelector('body');
+const winnerButton = document.createElement('a');
+winnerButton.id = 'winner-button';
+winnerButton.href = 'winner.html';
+
+body.appendChild(winnerButton);
 
 
 
@@ -524,6 +554,9 @@ let speedOfautoroll = 5000;
 
 let autoRoll = document.querySelector('#autoroll');
 autoRoll.addEventListener('click', function () {
+	autoRoll.style.backgroundColor = 'grey';
+	autoRoll.style.cursor = 'not-allowed';
+	autoRoll.disabled = "disabled";
 	let positionInterval = setInterval(function () {
 		if (player1score < 30 && player2score < 30) {
 			if (whosTurn === 1) {

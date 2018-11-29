@@ -40,6 +40,21 @@
 		}
 	}
 
+	@media screen and (max-width: 1100px) {
+		.player1-dice-container {
+			order: 1;
+		}
+
+		.player2-dice-container {
+			order: 2;
+		}
+
+		.game-wrapper {
+			order: 3;
+			z-index: 1;
+		}
+	}
+
 	.gamelog {
 		display: flex;
 		flex-direction: column-reverse;
@@ -81,14 +96,37 @@
 				transform: rotate(10deg);
 				transition: all .5s ease-in-out;
 			}
-
-			.gameshield1 {
-
-			}
-
-			.gameshield2 {
-
-			}
 		}
+
+		@media screen and (max-width: 730px) {
+			transform: scale(.6);
+		}
+		@media screen and (max-width: 445px) {
+			transform: scale(.4);
+		}
+	}
+}
+
+.logo {
+	width: 290px;
+	background: $light;
+	padding: $space;
+	z-index: 3;
+	position: absolute;
+	animation: animateLogo 3s 1 0s ease;
+	transform: translateX(-320px);
+	transition: 1s ease;
+
+	&:hover{
+		transform: translateX(0);
+	}
+}
+
+@keyframes animateLogo{
+	0%{
+		transform: translateX(0);
+	}
+	100%{
+		transform: translateX(-320px);
 	}
 }
