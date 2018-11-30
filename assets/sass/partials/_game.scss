@@ -87,6 +87,7 @@
 			width: 700px;
 			height: 500px;
 			position: relative;
+			box-shadow: 0 0 20px 3px $dark;
 
 			.gameshield {
 				position: absolute;
@@ -111,7 +112,7 @@
 	width: 290px;
 	background: $light;
 	padding: $space;
-	z-index: 3;
+	z-index: 4;
 	position: absolute;
 	animation: animateLogo 3s 1 0s ease;
 	transform: translateX(-320px);

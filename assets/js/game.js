@@ -210,15 +210,15 @@ function rollPlayer1() {
 			player1score++;
 			player1are.innerHTML = player1score;
 
-			if (player1score >= 1 && player1score <= 6) stepRight(); //➡️
-			if (player1score === 7) stepDown(); //⬇️
-			if (player1score >= 7 && player1score <= 13) stepLeft(); //⬅️
-			if (player1score === 14) stepDown(); //⬇️
-			if (player1score >= 14 && player1score <= 20) stepRight(); //➡️
-			if (player1score === 21) stepDown(); //⬇️
-			if (player1score >= 21 && player1score <= 27) stepLeft(); //⬅️
-			if (player1score === 28) stepDown(); //⬇️
-			if (player1score >= 28 && player1score <= 30) stepRight(); //⬅️
+			if (player1score >= 1 && player1score <= 6) stepRight(); //➡
+			if (player1score === 7) stepDown(); //⬇
+			if (player1score >= 7 && player1score <= 13) stepLeft(); //⬅
+			if (player1score === 14) stepDown(); //⬇
+			if (player1score >= 14 && player1score <= 20) stepRight(); //➡
+			if (player1score === 21) stepDown(); //⬇
+			if (player1score >= 21 && player1score <= 27) stepLeft(); //⬅
+			if (player1score === 28) stepDown(); //⬇
+			if (player1score >= 28 && player1score <= 30) stepRight(); //⬅
 
 			checkWinner();
 			checkWhosTurn();
@@ -340,7 +340,6 @@ dice2.appendChild(diceSvg2);
 function rollPlayer2() {
 	if (whosTurn === 2) {
 		rollSumPlayer2++;
-
 		let gameLog2 = document.querySelector('#gamelog2');
 		let diceout2 = Math.floor(Math.random() * 6) + 1;
 
@@ -415,15 +414,17 @@ function rollPlayer2() {
 			player2score++;
 			player2are.innerHTML = player2score;
 
-			if (player2score >= 1 && player2score <= 6) stepRight(); //➡️
-			if (player2score === 7) stepDown(); //⬇️
-			if (player2score >= 7 && player2score <= 13) stepLeft(); //⬅️
-			if (player2score === 14) stepDown(); //⬇️
-			if (player2score >= 14 && player2score <= 20) stepRight(); //➡️
-			if (player2score === 21) stepDown(); //⬇️
-			if (player2score >= 21 && player2score <= 27) stepLeft(); //⬅️
-			if (player2score === 28) stepDown(); //⬇️
-			if (player2score >= 28 && player2score <= 30) stepRight(); //⬅️
+			waitForDiceToRoll();
+
+			if (player2score >= 1 && player2score <= 6) stepRight(); //➡
+			if (player2score === 7) stepDown(); //⬇
+			if (player2score >= 7 && player2score <= 13) stepLeft(); //⬅
+			if (player2score === 14) stepDown(); //⬇
+			if (player2score >= 14 && player2score <= 20) stepRight(); //➡
+			if (player2score === 21) stepDown(); //⬇
+			if (player2score >= 21 && player2score <= 27) stepLeft(); //⬅
+			if (player2score === 28) stepDown(); //⬇
+			if (player2score >= 28 && player2score <= 30) stepRight(); //⬅
 
 			checkWinner();
 			checkWhosTurn();
@@ -459,7 +460,6 @@ function rollPlayer2() {
 				button1.style.backgroundColor = '#1B4D8C';
 				button2.disabled = "disabled";
 			}
-
 		}
 
 
@@ -554,6 +554,10 @@ let speedOfautoroll = 5000;
 
 let autoRoll = document.querySelector('#autoroll');
 autoRoll.addEventListener('click', function () {
+	button1.style.backgroundColor = 'gray';
+	button2.style.backgroundColor = 'gray';
+	button1.disabled = "disabled";
+	button2.disabled = "disabled";
 	autoRoll.style.backgroundColor = 'grey';
 	autoRoll.style.cursor = 'not-allowed';
 	autoRoll.disabled = "disabled";
@@ -573,4 +577,13 @@ autoRoll.addEventListener('click', function () {
 }, false);
 
 
+/**
+ * Wait for turn
+ */
 
+function waitForDiceToRoll() {
+	button1.style.backgroundColor = 'gray';
+	button2.style.backgroundColor = 'gray';
+	button1.disabled = "disabled";
+	button2.disabled = "disabled";
+}
