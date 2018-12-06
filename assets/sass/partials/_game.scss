@@ -114,13 +114,16 @@
 	padding: $space;
 	z-index: 4;
 	position: absolute;
-	animation: animateLogo 3s 1 0s ease;
 	transform: translateX(-320px);
 	transition: 1s ease;
 
 	&:hover{
 		transform: translateX(0);
 	}
+}
+
+.animate-logo {
+	animation: animateLogo 3s 1 0s ease;
 }
 
 @keyframes animateLogo{
