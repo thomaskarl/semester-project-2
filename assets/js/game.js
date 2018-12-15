@@ -135,12 +135,13 @@ const diceSvg1 = document.createElement('img');
 diceSvg1.classList.add('dice');
 dice1.appendChild(diceSvg1);
 
+const startHereButton = document.querySelector('.start-here');
 button1.addEventListener('click', rollPlayer1);
 
 function rollPlayer1() {
 	if (whosTurn === 1) {
 		rollSumPlayer1++;
-
+		startHereButton.style.display = 'none';
 		let gameLog1 = document.querySelector('#gamelog1');
 		let diceout1 = Math.floor(Math.random() * 6) + 1;
 
@@ -241,17 +242,16 @@ function rollPlayer1() {
 		function stepLeft() {
 			currentXpositionPlayer1 -= 100;
 			gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
-			console.log(currentXpositionPlayer1);
 		}
 
 		function stepRight() {
 			currentXpositionPlayer1 += 100;
 			gameshield1.style.transform = 'translateX(' + currentXpositionPlayer1 + 'px)';
-			console.log(currentXpositionPlayer1);
 		}
 
 		function checkWhosTurn() {
 			if (diceout1 === 6) {
+				hitSix();
 				info1.innerHTML = '⭐ Rolled a 6: one free roll';
 				whosTurn = 1;
 				button2.style.backgroundColor = 'gray';
@@ -267,7 +267,6 @@ function rollPlayer1() {
 				button1.style.cursor = 'not-allowed';
 				button2.style.cursor = 'pointer';
 			}
-
 		}
 
 
@@ -275,6 +274,7 @@ function rollPlayer1() {
 			if (player1score === obstacle1) {
 				obstacleSound.play();
 				player1score = player1score - 2;
+				hitObstacle('🐉', 2);
 				info1.innerHTML = ('Hit a 🐉, go back 2 tiles');
 				currentXpositionPlayer1 = 300;
 				setTimeout(function(){
@@ -285,6 +285,7 @@ function rollPlayer1() {
 			if (player1score === obstacle2) {
 				obstacleSound.play();
 				player1score = player1score - 2;
+				hitObstacle('🐻', 2);
 				info1.innerHTML = ('Hit a 🐻, go back 2 tiles');
 				currentXpositionPlayer1 = 500;
 				setTimeout(function(){
@@ -295,6 +296,7 @@ function rollPlayer1() {
 			if (player1score === obstacle3) {
 				obstacleSound.play();
 				player1score = player1score - 1;
+				hitObstacle('🦄', 1);
 				info1.innerHTML = ('Hit a 🦄, go back 1 tiles');
 				currentXpositionPlayer1 = 0;
 				setTimeout(function(){
@@ -305,6 +307,7 @@ function rollPlayer1() {
 			if (player1score === obstacle4) {
 				obstacleSound.play();
 				player1score = player1score - 4;
+				hitObstacle('🐊', 4);
 				info1.innerHTML = ('Hit a 🐊, go back 4 tiles');
 				currentXpositionPlayer1 = 200;
 				setTimeout(function(){
@@ -315,6 +318,7 @@ function rollPlayer1() {
 			if (player1score === obstacle5) {
 				obstacleSound.play();
 				player1score = player1score - 2;
+				hitObstacle('🐲', 2);
 				info1.innerHTML = ('Hit a 🐲, go back 2 tiles');
 				currentXpositionPlayer1 = 400;
 				setTimeout(function(){
@@ -329,7 +333,6 @@ function rollPlayer1() {
 				localStorage.winner = player1;
 				localStorage.rolls = rollSumPlayer1;
 				winSound.play();
-				console.log('Player 1 is the winner');
 				setTimeout(function(){
 					document.getElementById("winner-button").click();
 				}, 2000);
@@ -452,17 +455,16 @@ function rollPlayer2() {
 		function stepLeft() {
 			currentXpositionPlayer2 -= 100;
 			gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
-			console.log(currentXpositionPlayer2);
 		}
 
 		function stepRight() {
 			currentXpositionPlayer2 += 100;
 			gameshield2.style.transform = 'translateX(' + currentXpositionPlayer2 + 'px)';
-			console.log(currentXpositionPlayer2);
 		}
 
 		function checkWhosTurn() {
 			if (diceout2 === 6) {
+				hitSix();
 				info2.innerHTML = '⭐ Rolled a 6: one free roll';
 				whosTurn = 2;
 				button1.style.backgroundColor = 'gray';
@@ -484,6 +486,7 @@ function rollPlayer2() {
 		function checkObstacle() {
 			if (player2score === obstacle1) {
 				obstacleSound.play();
+				hitObstacle('🐉', 2);
 				info2.innerHTML = ('Hit a 🐉, go back 2 tiles');
 				setTimeout(function(){
 					player2score = player2score - 2;
@@ -494,6 +497,7 @@ function rollPlayer2() {
 			}
 			if (player2score === obstacle2) {
 				obstacleSound.play();
+				hitObstacle('🐻', 2);
 				info2.innerHTML = ('Hit a 🐻, go back 2 tiles');
 				setTimeout(function(){
 					player2score = player2score - 2;
@@ -504,6 +508,7 @@ function rollPlayer2() {
 			}
 			if (player2score === obstacle3) {
 				obstacleSound.play();
+				hitObstacle('🦄', 1);
 				info2.innerHTML = ('Hit a 🦄, go back 1 tiles');
 				setTimeout(function(){
 					player2score = player2score - 1;
@@ -514,6 +519,7 @@ function rollPlayer2() {
 			}
 			if (player2score === obstacle4) {
 				obstacleSound.play();
+				hitObstacle('🐊', 4);
 				info2.innerHTML = ('Hit a 🐊, go back 4 tiles');
 				setTimeout(function(){
 					player2score = player2score - 4;
@@ -524,6 +530,7 @@ function rollPlayer2() {
 			}
 			if (player2score === obstacle5) {
 				obstacleSound.play();
+				hitObstacle('🐲', 2);
 				info2.innerHTML = ('Hit a 🐲, go back 2 tiles');
 				setTimeout(function(){
 					player2score = player2score - 2;
@@ -539,7 +546,6 @@ function rollPlayer2() {
 				localStorage.winner = player2;
 				localStorage.rolls = rollSumPlayer2;
 				winSound.play();
-				console.log('Player 2 is the winner');
 				setTimeout(function(){
 					document.getElementById("winner-button").click();
 				}, 2000);
@@ -551,7 +557,7 @@ function rollPlayer2() {
 
 
 /**
- * Silent Winner 'button'
+ * Silent Winner 'button' 🏆
  */
 const body = document.querySelector('body');
 const winnerButton = document.createElement('a');
@@ -562,17 +568,16 @@ body.appendChild(winnerButton);
 
 
 
-
-
 /**
  * Autoroll button 🗞️
  */
 
-let speedOfautoroll = 3000;
+let speedOfautoroll = 4000;
 
 let autoRoll = document.querySelector('#autoroll');
 
 autoRoll.addEventListener('click', function () {
+	startHereButton.style.display = 'none';
 	autoRoll.style.backgroundColor = 'grey';
 	autoRoll.style.cursor = 'not-allowed';
 	autoRoll.disabled = "disabled";
@@ -591,4 +596,66 @@ autoRoll.addEventListener('click', function () {
 		}
 
 	}, speedOfautoroll);
+}, false);
+
+
+
+/**
+ * Obstacle function 🕳️
+ */
+
+const obstacleText1 = document.querySelector('.obstacle-text1');
+const obstacleText2 = document.querySelector('.obstacle-text2');
+const obstacleText3 = document.querySelector('.obstacle-text3');
+const obstacle = document.querySelector('.obstacle');
+const obstacleContainer = document.querySelector('.obstacle-container');
+
+function hitObstacle(icon, backTile) {
+	obstacle.style.opacity = '1';
+	obstacleText1.innerHTML = 'Dang!!!';
+	obstacleText2.innerHTML = 'You hit a ' + icon;
+	obstacleText3.innerHTML = 'go back ' + backTile + ' tiles!';
+	obstacleContainer.style.background = 'rgba(0, 0, 0, 0.25)';
+
+	setTimeout(function(){
+		obstacle.style.opacity = '0';
+		obstacleText1.innerHTML = '';
+		obstacleText2.innerHTML = '';
+		obstacleText3.innerHTML = '';
+		obstacleContainer.style.background = 'transparent';
+	}, 1400);
+}
+
+
+
+/**
+ * Hit a 6 function 🎇
+ */
+
+function hitSix() {
+	obstacle.style.opacity = '1';
+	obstacleText1.innerHTML = 'HORRAYY!!!';
+	obstacleText2.innerHTML = 'You rolled a 6️⃣';
+	obstacleText3.innerHTML = 'Get one free roll';
+	obstacleContainer.style.background = 'rgba(0, 0, 0, 0.25)';
+
+	setTimeout(function(){
+		obstacle.style.opacity = '0';
+		obstacleText1.innerHTML = '';
+		obstacleText2.innerHTML = '';
+		obstacleText3.innerHTML = '';
+		obstacleContainer.style.background = 'transparent';
+	}, 1400);
+}
+
+
+
+/**
+ * Remove the Instructions welcome screen
+ */
+
+const instructions = document.querySelector('.icont');
+const closeInstructionsButton = document.querySelector('#close');
+closeInstructionsButton.addEventListener('click', function () {
+	instructions.style.display = 'none';
 }, false);

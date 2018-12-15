@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="622px" height="406px" viewBox="0 0 622 406" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Star</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="48.5737081%" cy="56.1007239%" fx="48.5737081%" fy="56.1007239%" r="43.9922492%" gradientTransform="translate(0.485737,0.561007),scale(0.643219,1.000000),rotate(47.650186),translate(-0.485737,-0.561007)" id="radialGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FAD961" offset="100%"></stop>
+        </radialGradient>
+        <polygon id="path-2" points="527.427267 348.446487 457.18812 412.696882 443.013693 335.509147 332.800767 372.103212 397.938251 289.660917 246 335.215392 357.108941 249.114195 269.067213 212.502056 397.588387 215.448624 275.881503 111.828184 406.975873 150.958341 391.031016 73.9042753 453.957322 125.835533 527.427267 23 560.897212 125.835533 653.823518 53.9042753 637.878661 160.958341 768.973032 121.828184 687.266148 195.448624 828.787322 203.502056 707.745593 249.114195 851.854534 300.215392 676.916284 299.660917 692.053767 402.103212 611.840842 335.509147 598.713405 406.995431 597.666415 412.696882"></polygon>
+        <filter x="-4.1%" y="-3.0%" width="108.6%" height="108.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="3" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke-linejoin="round">
+        <g id="Details" transform="translate(-238.000000, -20.000000)" fill-rule="nonzero">
+            <g id="Star">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                <use stroke="#000000" stroke-width="6" fill="url(#radialGradient-1)" xlink:href="#path-2"></use>
+            </g>
+        </g>
+    </g>
+</svg>
