@@ -572,12 +572,10 @@ let speedOfautoroll = 3000;
 
 let autoRoll = document.querySelector('#autoroll');
 
-
 autoRoll.addEventListener('click', function () {
 	autoRoll.style.backgroundColor = 'grey';
 	autoRoll.style.cursor = 'not-allowed';
 	autoRoll.disabled = "disabled";
-
 	button1.style.display = 'none';
 	button2.style.display = 'none';
 	let positionInterval = setInterval(function () {
@@ -594,15 +592,3 @@ autoRoll.addEventListener('click', function () {
 
 	}, speedOfautoroll);
 }, false);
-
-
-/**
- * Wait for turn
- */
-
-function waitForDiceToRoll() {
-	button1.style.backgroundColor = 'gray';
-	button2.style.backgroundColor = 'gray';
-	button1.disabled = "disabled";
-	button2.disabled = "disabled";
-}

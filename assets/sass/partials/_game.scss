@@ -34,6 +34,9 @@
 	.dice-container {
 		width: 200px;
 		position: relative;
+		@media screen and (max-width: 1100px) {
+			width: unset;
+		}
 
 		.dice2button {
 			background-color: grey;
@@ -41,12 +44,24 @@
 	}
 
 	@media screen and (max-width: 1100px) {
+		.dice {
+			display: none;
+		}
+
 		.player1-dice-container {
 			order: 1;
+
+			p {
+				display: none
+			}
 		}
 
 		.player2-dice-container {
 			order: 2;
+
+			p {
+				display: none
+			}
 		}
 
 		.game-wrapper {
@@ -104,6 +119,8 @@
 		}
 		@media screen and (max-width: 445px) {
 			transform: scale(.4);
+			transform-origin: top;
+			margin-top: 20px;
 		}
 	}
 }
@@ -132,5 +149,25 @@
 	}
 	100%{
 		transform: translateX(-320px);
+	}
+}
+
+@media screen and (max-width: 730px) {
+	.player-container {
+		padding: 0 5px !important;
+	}
+
+	.margin {
+		margin: 2px;
+	}
+
+	.shield {
+		width: 70px !important;
+	}
+
+	.vs {
+		h2 {
+			font-size: 30px;
+		}
 	}
 }

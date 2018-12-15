@@ -76,6 +76,7 @@
 
 			.badge1 {
 				@include badge;
+				color: $dark;
 				background-color: $brand-color3;
 
 				&:after {
