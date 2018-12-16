@@ -1,4 +1,5 @@
-# semester-project-2
-an online board game for game of thrones created with html, css and javascript
+# 'Semester Project 2' for the second year @ Noroff Front End Development studies in Norway
 
-# LIVE RESULT HERE: https://thomasweb.studio/schoolprojects/SP-2/
+An online board game with Game of Thrones theme, created with HTML, CSS (SASS) and vanilla JavaScript.
+
+# Live result here: https://thomasweb.studio/schoolprojects/SP-2/
