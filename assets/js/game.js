@@ -140,6 +140,17 @@ button1.addEventListener('click', rollPlayer1);
 
 function rollPlayer1() {
 	if (whosTurn === 1) {
+
+		document.onkeydown = function (e) {
+			switch (e.key) {
+				case 's':
+						console.warn('Dont try to cheat');
+					break;
+				case 'k':
+						console.warn('Dont try to cheat');
+			}
+		};
+
 		rollSumPlayer1++;
 		startHereButton.style.display = 'none';
 		let gameLog1 = document.querySelector('#gamelog1');
@@ -259,6 +270,17 @@ function rollPlayer1() {
 				button1.disabled = "enable";
 				button2.style.cursor = 'not-allowed';
 				button1.style.cursor = 'pointer';
+
+				document.onkeydown = function (e) {
+					switch (e.key) {
+						case 's':
+								rollPlayer1();
+							break;
+						case 'k':
+								console.warn('Dont try to cheat');
+					}
+				};
+
 			} else {
 				whosTurn = 2;
 				button1.style.backgroundColor = 'gray';
@@ -266,6 +288,17 @@ function rollPlayer1() {
 				button1.disabled = "disabled";
 				button1.style.cursor = 'not-allowed';
 				button2.style.cursor = 'pointer';
+
+				document.onkeydown = function (e) {
+					switch (e.key) {
+						case 's':
+								console.warn('Dont try to cheat');
+							break;
+						case 'k':
+								rollPlayer2();
+					}
+				};
+
 			}
 		}
 
@@ -355,6 +388,17 @@ dice2.appendChild(diceSvg2);
 
 function rollPlayer2() {
 	if (whosTurn === 2) {
+
+		document.onkeydown = function (e) {
+			switch (e.key) {
+				case 's':
+						console.warn('Dont try to cheat');
+					break;
+				case 'k':
+						console.warn('Dont try to cheat');
+			}
+		};
+
 		rollSumPlayer2++;
 		let gameLog2 = document.querySelector('#gamelog2');
 		let diceout2 = Math.floor(Math.random() * 6) + 1;
@@ -472,6 +516,17 @@ function rollPlayer2() {
 				button2.disabled = "enable";
 				button2.style.cursor = 'pointer';
 				button1.style.cursor = 'not-allowed';
+
+				document.onkeydown = function (e) {
+					switch (e.key) {
+						case 's':
+							console.warn('Dont try to cheat');
+							break;
+						case 'k':
+							rollPlayer2();
+					}
+				};
+
 			} else {
 				whosTurn = 1;
 				button2.style.backgroundColor = 'gray';
@@ -479,6 +534,17 @@ function rollPlayer2() {
 				button2.disabled = "disabled";
 				button1.style.cursor = 'pointer';
 				button2.style.cursor = 'not-allowed';
+
+				document.onkeydown = function (e) {
+					switch (e.key) {
+						case 's':
+							rollPlayer1();
+							break;
+						case 'k':
+							console.warn('Dont try to cheat');
+					}
+				};
+
 			}
 		}
 
@@ -581,8 +647,12 @@ autoRoll.addEventListener('click', function () {
 	autoRoll.style.backgroundColor = 'grey';
 	autoRoll.style.cursor = 'not-allowed';
 	autoRoll.disabled = "disabled";
-	button1.style.display = 'none';
-	button2.style.display = 'none';
+	button1.style.height = '1px';
+	button1.style.padding = "1px";
+	button1.style.opacity = '0';
+	button2.style.height = '1px';
+	button2.style.padding = "1px";
+	button2.style.opacity = '0';
 	let positionInterval = setInterval(function () {
 		if (player1score < 30 && player2score < 30) {
 			if (whosTurn === 1) {
