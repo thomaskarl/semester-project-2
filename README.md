@@ -2,4 +2,4 @@
 
 An online board game with Game of Thrones theme, created with HTML, CSS (SASS) and vanilla JavaScript.
 
-# Live result here: https://thomasweb.studio/schoolprojects/SP-2/
+# Live result: https://thomasweb.studio/schoolprojects/SP-2/
