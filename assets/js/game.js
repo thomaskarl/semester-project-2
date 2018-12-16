@@ -364,7 +364,6 @@ function rollPlayer1() {
 		function checkWinner() {
 			if (player1score === 30) {
 				localStorage.winner = player1;
-				localStorage.rolls = rollSumPlayer1;
 				winSound.play();
 				setTimeout(function(){
 					document.getElementById("winner-button").click();
@@ -610,7 +609,6 @@ function rollPlayer2() {
 		function checkWinner() {
 			if (player2score === 30) {
 				localStorage.winner = player2;
-				localStorage.rolls = rollSumPlayer2;
 				winSound.play();
 				setTimeout(function(){
 					document.getElementById("winner-button").click();
